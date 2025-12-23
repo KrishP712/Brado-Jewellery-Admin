@@ -183,6 +183,7 @@ function Media() {
                                 </thead>
                                 <tbody className="divide-y divide-gray-100">
                                     {filteredMedia.map((media, index) => (
+                                        console.log(media),
                                         <tr
                                             key={media._id}
                                             className="hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 transition-all duration-200"

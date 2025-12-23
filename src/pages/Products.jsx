@@ -986,6 +986,7 @@ function Products() {
                   <div className="grid grid-cols-3 gap-3">
                     {formData.image.map((imgId) => {
                       const media = mediaList.find((m) => m._id === imgId);
+                      console.log(media)
                       return (
                         <div key={imgId} className="relative group">
                           <img
