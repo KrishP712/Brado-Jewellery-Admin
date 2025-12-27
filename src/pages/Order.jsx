@@ -12,7 +12,7 @@ function Order() {
   // Fetch orders on component mount
   useEffect(() => {
     dispatch(getallorder(page));
-  }, [dispatch]);
+  }, [dispatch, page]);
 
   // Extract orders array from API response
   const orders = Array.isArray(orderget?.orders)
@@ -28,7 +28,7 @@ function Order() {
       const updatedOrder = { orderId: order.orderId, status: newStatus };
       await dispatch(updateorder(updatedOrder)).unwrap();
       // Re-fetch orders to reflect the update
-      dispatch(getallorder());
+      dispatch(getallorder(page));
     } catch (error) {
       console.error(`Failed to update order to ${newStatus}:`, error);
       alert(`Failed to update order to ${newStatus}. Please try again.`);
@@ -183,7 +183,11 @@ function Order() {
             <AlertCircle className="text-red-600" size={24} />
             <h2 className="text-red-800 text-xl font-bold">Error Loading Orders</h2>
           </div>
-          <p className="text-red-600 mb-4">{isError || 'Please try refreshing the page.'}</p>
+          <p className="text-red-600 mb-4">
+            {typeof isError === 'string'
+              ? isError
+              : isError?.message || 'Please try refreshing the page.'}
+          </p>
           <button
             onClick={() => dispatch(getallorder())}
             className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition-colors"

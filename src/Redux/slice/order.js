@@ -7,7 +7,14 @@ export const getallorder = createAsyncThunk(
     "order/getallorder",
     async (page = 1, { rejectWithValue }) => {
         try {
-            const res = await axios.get(`${API_BASE}/allorder?page=${page}&limit=10`);
+            const token = localStorage.getItem("token");
+            const res = await axios.get(`${API_BASE}/allorder?page=${page}&limit=10`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
             return res.data;
         } catch (error) {
             return rejectWithValue(error.response?.data || error.message);
@@ -19,8 +26,14 @@ export const updateorder = createAsyncThunk(
     "order/updateorder",
     async (data, { dispatch, rejectWithValue }) => {
         try {
-            console.log(data);
-            const res = await axios.post(`${API_BASE}/updateorder`, data);
+            const token = localStorage.getItem("token");
+            const res = await axios.post(`${API_BASE}/updateorder`, data,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`, 
+                    },
+                }
+            );
             dispatch(getallorder());
             return res.data;
         } catch (error) {
