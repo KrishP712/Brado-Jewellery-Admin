@@ -8,7 +8,7 @@ export const getallorder = createAsyncThunk(
     async (page = 1, { rejectWithValue }) => {
         try {
             const token = localStorage.getItem("token");
-            const res = await axios.get(`${API_BASE}/allorder?page=${page}&limit=10`,
+            const res = await axios.get(`${API_BASE}/getorderforadmin?page=${page}&limit=10`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
