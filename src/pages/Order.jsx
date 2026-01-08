@@ -6,6 +6,8 @@ import { getallorder, updateorder } from '../Redux/slice/order';
 function Order() {
   const dispatch = useDispatch();
   const { loading, isError, orderget, totalPages } = useSelector((state) => state.order);
+  const ord = useSelector((state) => state.order)
+  console.log(ord);
   const [page, setPage] = useState(1);
   const [selectedOrder, setSelectedOrder] = useState(null);
 

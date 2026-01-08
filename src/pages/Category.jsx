@@ -130,27 +130,22 @@ function Categories() {
     }
   };
 
-  // Helper function to get media URL - handles both populated objects and direct URLs
+ 
   const getMediaUrl = (mediaId) => {
     const media = mediaList.find(m => m._id === mediaId);
     return media ? media.media : null;
   };
 
-  // Helper function to extract image URL from various formats
   const extractImageUrl = (imgData) => {
     if (!imgData) return null;
 
-    // If it's already a string URL
     if (typeof imgData === 'string') {
       return imgData;
     }
 
-    // If it's an object with media property
     if (typeof imgData === 'object' && imgData.media) {
       return imgData.media;
     }
-
-    // If it's an object with _id, try to find in mediaList
     if (typeof imgData === 'object' && imgData._id) {
       const media = mediaList.find(m => m._id === imgData._id);
       return media ? media.media : null;
@@ -194,15 +189,23 @@ function Categories() {
     if (!files || files.length === 0) return;
 
     const uploadFormData = new FormData();
+
     Array.from(files).forEach((file) => {
       uploadFormData.append("media", file);
+
+      const type = file.type.startsWith("video")
+        ? "video"
+        : "image";
+
+      uploadFormData.append("type", type);
     });
 
     try {
       await dispatch(createMedia(uploadFormData)).unwrap();
+      dispatch(getMedia()); 
       alert("Media uploaded successfully!");
     } catch (error) {
-      console.error("Error uploading media:", error);
+      console.error(error);
       alert("Failed to upload media");
     }
   };

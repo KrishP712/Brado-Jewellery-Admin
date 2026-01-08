@@ -8,7 +8,7 @@ export const getallorder = createAsyncThunk(
     async (page = 1, { rejectWithValue }) => {
         try {
             const token = localStorage.getItem("token");
-            const res = await axios.get(`${API_BASE}/getorderforadmin?page=${page}&limit=10`,
+            const res = await axios.get(`${API_BASE}/getorderforadmin?page=${page}&limit=12`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -63,7 +63,7 @@ const orderslice = createSlice({
             })
             .addCase(getallorder.fulfilled, (state, action) => {
                 state.loading = false;
-                state.orderget = action.payload.data;
+                state.orderget = action.payload.order;
                 state.isError = null;
                 state.totalPages = action.payload.totalPages;
                 state.currentPage = action.payload.currentPage;
